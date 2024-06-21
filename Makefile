@@ -1,7 +1,7 @@
 # Detected Variables
 CORES := $(shell nproc)
 BASE := $(shell pwd)
-SYS_ARCH := $(shell uname -p)
+SYS_ARCH := $(shell uname -m)
 SHELL := /bin/bash
 
 # Config Variables
@@ -48,7 +48,7 @@ ifneq ($(wildcard $(LINUX_DIR)),)
 	cd $(LINUX_DIR) && git pull
 else
 	@echo "Linux directory not found, cloning repo..."
-	git clone --depth=1 https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git $(LINUX_DIR)
+	git clone --depth=1 -b linux-5.15.y https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git $(LINUX_DIR)
 	cp $(FILES_DIR)/linux-config $(LINUX_CFG)
 endif
 
@@ -95,8 +95,10 @@ ifeq ($(SYS_ARCH),x86_64)
 	@sed -i "s|.*CONFIG_EXTRA_CFLAGS.*|CONFIG_EXTRA_CFLAGS=\"-I"$(BASE)"/i486-linux-musl-cross/include\"|" $(BUSYBOX_DIR)/.config
 	@sed -i "s|.*CONFIG_EXTRA_LDFLAGS.*|CONFIG_EXTRA_LDFLAGS=\"-L"$(BASE)"/i486-linux-musl-cross/lib\"|" $(BUSYBOX_DIR)/.config
 endif
-	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) -j $(CORES)
+	$(MAKE) ARCH=x86 CFLAGS="-Oz -pipe" -C $(BUSYBOX_DIR) -j $(CORES)
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) install
+	sstrip $(BUSYBOX_DIR)/_install/bin/busybox
+	upx --ultra-brute $(BUSYBOX_DIR)/_install/bin/busybox
 	mv $(BUSYBOX_DIR)/_install $(FILESYSTEM_DIR)
 
 make_rootfs:

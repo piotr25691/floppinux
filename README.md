@@ -16,7 +16,7 @@ Read only the manual:
 - This repo https://github.com/w84death/floppinux/tree/main/manual
 - Mirror https://archive.org/details/floppinux-manual/
 
-## UPDATE 0.2.2
+## UPDATE 0.3 LTS
 
-Code refactored. Smaller builds. Instructions for 64-bit host OS.
+Updated for Linux 5.15 LTS. Compressed BusyBox binaries. Even smaller.
 Read more at: https://krzysztofjankowski.com/floppinux/
