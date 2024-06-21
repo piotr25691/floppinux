@@ -95,7 +95,7 @@ ifeq ($(SYS_ARCH),x86_64)
 	@sed -i "s|.*CONFIG_EXTRA_CFLAGS.*|CONFIG_EXTRA_CFLAGS=\"-I"$(BASE)"/i486-linux-musl-cross/include\"|" $(BUSYBOX_DIR)/.config
 	@sed -i "s|.*CONFIG_EXTRA_LDFLAGS.*|CONFIG_EXTRA_LDFLAGS=\"-L"$(BASE)"/i486-linux-musl-cross/lib\"|" $(BUSYBOX_DIR)/.config
 endif
-	$(MAKE) ARCH=x86 CFLAGS="-Oz -pipe" -C $(BUSYBOX_DIR) -j $(CORES)
+	$(MAKE) ARCH=x86 CFLAGS="-Os -pipe" -C $(BUSYBOX_DIR) -j $(CORES)
 	$(MAKE) ARCH=x86 -C $(BUSYBOX_DIR) install
 	sstrip $(BUSYBOX_DIR)/_install/bin/busybox
 	upx --ultra-brute $(BUSYBOX_DIR)/_install/bin/busybox
