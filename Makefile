@@ -110,7 +110,7 @@ make_rootfs:
 	cp $(WELCOME) $(FILESYSTEM_DIR)/
 	chmod +x $(FILESYSTEM_DIR)/etc/init.d/rc
 	sudo chown -R root:root $(FILESYSTEM_DIR)/
-	cd $(FILESYSTEM_DIR); find . | cpio -H newc -o | xz --check=crc32 > ../$(ROOTFS)
+	cd $(FILESYSTEM_DIR); find . | cpio -oH newc | xz -9 --check=crc32 > ../$(ROOTFS)
 
 make_floppy_image:
 	dd if=/dev/zero of=$(FSIMAGE) bs=1k count=$(ROOTFS_SIZE)
