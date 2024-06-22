@@ -18,5 +18,5 @@ Read only the manual:
 
 ## UPDATE 0.3 LTS
 
-Updated for Linux 5.15 LTS. Compressed BusyBox binaries. Even smaller.
+Updated for Linux 5.15 LTS. Compressed BusyBox binaries. More functional.
 Read more at: https://krzysztofjankowski.com/floppinux/
